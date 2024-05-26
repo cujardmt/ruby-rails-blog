@@ -4,6 +4,15 @@ class CommentsController < ApplicationController
       @comment = @article.comments.create(comment_params)
       redirect_to article_path(@article)
     end
+
+    def destroy
+      @article = Article.find(params[:article_id])
+      @comment = @article.comments.find(params[:id])
+      @comment.destroy
+      redirect_to controller: 'articles', action: 'show', id: @article.id
+
+      # redirect_to root_path, status: :see_other
+    end
   
     private
       def comment_params
